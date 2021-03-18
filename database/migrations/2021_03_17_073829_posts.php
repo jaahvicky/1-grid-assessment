@@ -18,7 +18,6 @@ class Posts extends Migration
         $table->id();
         $table->string('title')->unique();
         $table->text('body');
-        $table->string('slug')->unique();
         $table->timestamps();
       });
   
