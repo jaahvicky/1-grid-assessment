@@ -5,12 +5,11 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Post List</div>
+                    <div class="panel-heading">Post Details</div>
 
                     <div class="panel-body">
 
-                        <p class="lead">Here's a list of all Posts</p>
-                        <p>{{ $post->title }}</p>
+                        <h3>{{ $post->title }}</h3>
                         <p>{{ $post->body }}</p>
                         <hr>
 

@@ -46,7 +46,7 @@
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
 
-            <!-- Right Side Of Navbar -->
+            {{-- <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
@@ -68,7 +68,7 @@
                         </ul>
                     </li>
                 @endif
-            </ul>
+            </ul> --}}
 
 
         </div>

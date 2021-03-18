@@ -15,7 +15,7 @@
         
                             <p>
                             <a href="{{ route('post.show', $post->id) }}" class="btn btn-info">View Post</a>
-                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Edit Post</a>
+                            {{-- <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Edit Post</a> --}}
                             </p>
                             <hr>
                         @endforeach
