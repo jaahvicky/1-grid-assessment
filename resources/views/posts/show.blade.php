@@ -11,6 +11,7 @@
 
                         <h3>{{ $post->title }}</h3>
                         <p>{{ $post->body }}</p>
+                        
                         <hr>
 
                         <a href="{{ route('post.index') }}" class="btn btn-info">Back to all posts</a>

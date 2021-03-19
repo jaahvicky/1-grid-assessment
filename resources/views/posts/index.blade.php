@@ -12,8 +12,13 @@
 
                         @foreach($posts as $post)
                             <h3>{{ $post->title}}</h3>
-        
+
+                            <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $post->userAverageRating }}" data-size="xs">
+
+                            <input type="hidden" name="id" required="" value="{{ $post->id }}">        
                             <p>
+                                    
+
                             <a href="{{ route('post.show', $post->id) }}" class="btn btn-info">View Post</a>
                             {{-- <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Edit Post</a> --}}
                             </p>
@@ -25,4 +30,7 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $("#input-id").rating();
+    </script>
 @endsection
