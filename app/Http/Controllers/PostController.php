@@ -88,6 +88,7 @@ class PostController extends Controller
     {
 
         // $this->authorize('update', $post);
+        
 
         request()->validate([
 
@@ -95,11 +96,17 @@ class PostController extends Controller
             'body' => 'required',
         
                 ]);
+        if(Gate:allows('update-post',$post)){
+            $post->update($request->all());
 
-        $post->update($request->all());
-
+            return redirect()->route('post.index')
+                    ->with('success','Post updated successfully'); 
+        }
+        
         return redirect()->route('post.index')
-                    ->with('success','Post updated successfully');        
+                    ->with('error','You are not authorized to update this post'); 
+        
+               
     }
 
     /**
@@ -112,10 +119,12 @@ class PostController extends Controller
     
     {
                 // $this->authorize('update', $post);
+           if(Gate:allows('delete-post',$post)){
+                Post::find($id)->delete();
 
-        Post::find($id)->delete();
-
-        return redirect()->route('post.index')->with('success','Post deleted successfully');
+                return redirect()->route('post.index')->with('success','Post deleted successfully');
+           }
+           return redirect()->route('post.index')->with('success','You are not authorized to delete this post');
 
     }
 
