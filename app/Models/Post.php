@@ -13,7 +13,12 @@ class Post extends Model
     use Rateable;
 
     protected $fillable = [
-        'title', 'body'
+        'title', 'body', 'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

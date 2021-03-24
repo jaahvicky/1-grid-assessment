@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 
 class PostController extends Controller
 {
@@ -82,8 +84,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
+
+        // $this->authorize('update', $post);
+
         request()->validate([
 
             'title' => 'required',        
@@ -91,7 +96,8 @@ class PostController extends Controller
         
                 ]);
 
-        Post::find($id)->update($request->all());
+        $post->update($request->all());
+
         return redirect()->route('post.index')
                     ->with('success','Post updated successfully');        
     }
@@ -103,7 +109,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    
     {
+                // $this->authorize('update', $post);
+
         Post::find($id)->delete();
 
         return redirect()->route('post.index')->with('success','Post deleted successfully');
