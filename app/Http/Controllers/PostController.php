@@ -44,8 +44,12 @@ class PostController extends Controller
             'title' => 'required',
             'body' => 'required',
         ]);
-    
-        Post::create($request->all());
+  
+        Post::create([
+            'title'=>$request->title,
+            'body'=>$request->body,
+            'user_id'=>auth()->user()->id,
+        ]);
      
         return redirect()->route('post.index')
                         ->with('success','Post created successfully.');
@@ -72,9 +76,19 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
+        $post = Post::where('id',$id)->first();
+        
 
-        return view('posts.edit',compact('post'));
+        if(!$post){
+            return redirect()->route('post.index')->with('error','Invalid post record supplied');
+        }
+       
+       
+        if(Gate::allows('update',$post)){
+            return view('posts.edit',compact('post'));
+        }
+        return redirect()->route('post.show', $id)
+                    ->with('error','You are not authorized to edit this post');
     }
 
     /**
@@ -84,26 +98,29 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update($id, Request $request)
     {
-
-        // $this->authorize('update', $post);
-        
-
         request()->validate([
 
             'title' => 'required',        
             'body' => 'required',
         
                 ]);
-        if(Gate:allows('update-post',$post)){
-            $post->update($request->all());
+        $post = Post::where('id',$id)->first();
+
+        if(!$post){
+            return redirect()->route('post.show', $id)->with('error','Invalid post record supplied');
+        }
+        if(Gate::allows('update',$post)){
+            $post->title = $request->title;
+            $post->body = $request->body;
+            $post->save();
 
             return redirect()->route('post.index')
                     ->with('success','Post updated successfully'); 
         }
         
-        return redirect()->route('post.index')
+        return redirect()->route('post.show', $id)
                     ->with('error','You are not authorized to update this post'); 
         
                
@@ -118,13 +135,18 @@ class PostController extends Controller
     public function destroy($id)
     
     {
-                // $this->authorize('update', $post);
-           if(Gate:allows('delete-post',$post)){
+           $post = Post::where('id',$id)->first();
+
+           if(!$post){
+                return redirect()->route('post.show', $id)->with('error','Invalid post record supplied');
+           }
+
+           if(Gate::allows('delete',$post)){
                 Post::find($id)->delete();
 
                 return redirect()->route('post.index')->with('success','Post deleted successfully');
            }
-           return redirect()->route('post.index')->with('success','You are not authorized to delete this post');
+           return redirect()->route('post.show', $id)->with('error','You are not authorized to delete this post');
 
     }
 

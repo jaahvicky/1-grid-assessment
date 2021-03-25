@@ -8,7 +8,7 @@
                     <div class="panel-heading">Post Details</div>
 
                     <div class="panel-body">
-
+                        
                         <h3>{{ $post->title }}</h3>
                         <p>{{ $post->body }}</p>
                         

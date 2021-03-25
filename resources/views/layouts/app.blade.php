@@ -88,7 +88,7 @@
         </div>
     </div>
 </nav>
-
+@include('partials.alerts.alert-message')
 @yield('content')
 
         <!-- JavaScripts -->
